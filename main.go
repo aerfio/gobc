@@ -3,55 +3,57 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"os"
 
 	"github.com/fatih/color"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
-func flagInit() (int, string) {
-	color.Set(color.Bold)
-	prID := flag.Int("n", -1, color.HiRedString("number of pull request you want to fetch for review - mandatory"))
-	branch := flag.String("b", "review", color.HiBlueString("name of branch you want PR fetched to"))
-	color.Unset()
+func flagInit() bool {
+	list := flag.Bool("l", false, color.HiRedString(("only list local and remote branches")))
 	flag.Parse()
-	return *prID, *branch
-}
-
-func failIfErr(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
+	return *list
 }
 
 func main() {
-	// number, branch := flagInit()
-	// if number < 0 {
-	// 	log.Fatal(fmt.Errorf(color.RedString(`use "-n" flag to set number of pull request you want to fetch`)))
+	list := flagInit()
 
-	// }
-	r, err := git.PlainOpen(".")
-	failIfErr(err)
+	localBranches, remoteBranches := getBranches()
 
-	remotes, err := r.Remotes()
-	failIfErr(err)
+	if list {
+		color.Blue("Branches on remotes:")
+		for _, branch := range remoteBranches {
+			fmt.Println(branch.Name().Short())
+		}
+		color.Magenta("Local branches")
+		for _, branch := range localBranches {
+			fmt.Println(branch.Name().Short())
+		}
 
-	for _, remote := range remotes {
-		// fmt.Println(remote.List(&git.ListOptions{}))
-		refs, err := remote.List(&git.ListOptions{})
-		failIfErr(err)
-		for _, ref := range refs {
-			fmt.Println(ref)
+		os.Exit(0)
+	}
+
+	toDelete := make([]ref, 0)
+
+	for _, local := range localBranches {
+		if local.Name().Short() == "master" {
+			continue
+		}
+
+		rm := true
+		for _, remote := range remoteBranches {
+			if local.Name().Short() == remote.Name().Short() {
+				rm = false
+			}
+		}
+
+		if rm {
+			toDelete = append(toDelete, local)
 		}
 	}
 
-	w, err := r.Branches()
-	failIfErr(err)
-
-	err = w.ForEach(func(arg *plumbing.Reference) error {
-		fmt.Println(arg.Name())
-		return nil
-	})
-	failIfErr(err)
+	deleteBranches(toDelete)
+	color.HiGreen("Deleted branches:")
+	for _, branch := range toDelete {
+		color.Green(" - " + branch.Name().Short())
+	}
 }
