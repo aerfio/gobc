@@ -20,7 +20,7 @@ func main() {
 	localBranches, remoteBranches := getBranches()
 
 	if list {
-		color.Blue("Branches on remotes:")
+		color.Blue("Branches on origin:")
 		for _, branch := range remoteBranches {
 			fmt.Println(branch.Name().Short())
 		}

@@ -35,17 +35,16 @@ func getBranches() ([]ref, []ref) {
 	r, err := git.PlainOpen(".")
 	failIfErr(err)
 
-	remotes, err := r.Remotes()
+	remote, err := r.Remote("origin")
 	failIfErr(err)
+
 	remoteBranches := make([]ref, 0)
 
-	for _, remote := range remotes {
-		refs, err := remote.List(&git.ListOptions{})
-		failIfErr(err)
-		for _, ref := range refs {
-			if ref.Name().IsBranch() {
-				remoteBranches = append(remoteBranches, ref)
-			}
+	refs, err := remote.List(&git.ListOptions{})
+	failIfErr(err)
+	for _, ref := range refs {
+		if ref.Name().IsBranch() {
+			remoteBranches = append(remoteBranches, ref)
 		}
 	}
 
