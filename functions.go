@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -31,6 +32,17 @@ func deleteBranches(toDelete []ref) {
 	}
 }
 
+func listBranches(localBranches []ref, remoteBranches []ref){
+	color.Blue("Branches on origin:")
+	for _, branch := range remoteBranches {
+		fmt.Println(branch.Name().Short())
+	}
+	color.Magenta("Local branches")
+	for _, branch := range localBranches {
+		fmt.Println(branch.Name().Short())
+	}
+}
+
 func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
 	toDelete := make([]ref, 0)
 
@@ -38,18 +50,15 @@ func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
 		if local.Name().Short() == "master" {
 			continue
 		}
-
 		rm := true
 		for _, remote := range remoteBranches {
 			if local.Name().Short() == remote.Name().Short() {
 				rm = false
 			}
 		}
-
 		if rm {
 			toDelete = append(toDelete, local)
 		}
-
 	}
 	return toDelete
 }
