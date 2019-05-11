@@ -31,6 +31,29 @@ func deleteBranches(toDelete []ref) {
 	}
 }
 
+func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
+	toDelete := make([]ref, 0)
+
+	for _, local := range localBranches {
+		if local.Name().Short() == "master" {
+			continue
+		}
+
+		rm := true
+		for _, remote := range remoteBranches {
+			if local.Name().Short() == remote.Name().Short() {
+				rm = false
+			}
+		}
+
+		if rm {
+			toDelete = append(toDelete, local)
+		}
+
+	}
+	return toDelete
+}
+
 func getBranches() ([]ref, []ref) {
 	r, err := git.PlainOpen(".")
 	failIfErr(err)
