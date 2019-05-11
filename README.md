@@ -2,6 +2,9 @@
  gobc - Go branch clean
 </h1>
 
+[![CircleCI](https://circleci.com/gh/aerfio/gobc/tree/master.svg?style=shield)](https://circleci.com/gh/aerfio/gobc/tree/master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/aerfio/gobc)](https://goreportcard.com/report/github.com/aerfio/gobc)
+
 ## Purpose
 
 My typical workflow consists of making new branch with needed changes, then making PR with it and deleting it afterwards, when it is no logner needed.
