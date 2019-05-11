@@ -7,6 +7,7 @@ import (
 
 	"github.com/fatih/color"
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
 func flagInit() (int, string) {
@@ -45,27 +46,12 @@ func main() {
 		}
 	}
 
-	// w, err := r.Branches()
-	// failIfErr(err)
+	w, err := r.Branches()
+	failIfErr(err)
 
-	// err = w.ForEach(func(arg *plumbing.Reference) error {
-	// 	fmt.Println(arg.Name())
-	// 	return nil
-	// })
-	// failIfErr(err)
-	// for i, num :=range w {
-	// 	fmt.Println()
-	// }
-	// externalRefs := config.RefSpec(fmt.Sprintf("refs/pull/%d/head:refs/heads/%s", number, branch))
-	// err = r.Fetch(&git.FetchOptions{Progress: nil, RemoteName: "upstream", RefSpecs: []config.RefSpec{externalRefs}})
-	// checkError(err)
-
-	// w, err := r.Worktree()
-	// checkError(err)
-
-	// branchAsPlmbRef := plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", branch))
-	// err = w.Checkout(&git.CheckoutOptions{Branch: branchAsPlmbRef})
-
-	// checkError(err)
-	// color.HiGreen("Done!")
+	err = w.ForEach(func(arg *plumbing.Reference) error {
+		fmt.Println(arg.Name())
+		return nil
+	})
+	failIfErr(err)
 }
