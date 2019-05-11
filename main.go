@@ -9,7 +9,7 @@ import (
 )
 
 func flagInit() bool {
-	list := flag.Bool("l", false, color.HiRedString(("only list local and remote branches")))
+	list := flag.Bool("l", false, color.HiRedString(("list local and remote branches, without deleting")))
 	flag.Parse()
 	return *list
 }
