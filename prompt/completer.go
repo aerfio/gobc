@@ -16,7 +16,7 @@ func fromRefsToSuggestions(args []ref) []prompt.Suggest {
 	return ret
 }
 
-func NewCompleter(data []prompt.Suggest) *Completer {
+func newCompleter(data []prompt.Suggest) *Completer {
 	return &Completer{
 		Suggestions: data,
 	}
