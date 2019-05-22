@@ -1,30 +1,23 @@
-package main
+package prompt
 
 import (
-	"fmt"
+	"strings"
 
+	unique "github.com/aerfio/gobc/helpers"
+	"github.com/aerfio/gobc/types"
 	"github.com/c-bata/go-prompt"
 	"github.com/fatih/color"
 )
 
-type Suggestion struct {
-	Text string
-}
+type ref = types.Ref
 
-func completer(d prompt.Document) []prompt.Suggest {
-	s := []prompt.Suggest{
-		{Text: "users", Description: "Store the username and age"},
-		{Text: "articles", Description: "Store the article text posted by user"},
-		{Text: "comments", Description: "Store the text commented to articles"},
-	}
-	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
-}
+func DeletePrompt(toDelete []ref) []string {
+	suggestions := fromRefsToSuggestions(toDelete)
+	c := NewCompleter(suggestions)
+	color.HiGreen("List branches to delete:")
+	t := prompt.Input("> ", c.Complete)
 
-func main() {
+	branches := strings.Split(t, " ")
 
-}
-func deletePrompt(toDelete []ref) {
-	color.Green("List branches to delete:")
-	t := prompt.Input("> ", completer)
-	fmt.Println("You selected " + t)
+	return unique.UniqStr(branches)
 }
