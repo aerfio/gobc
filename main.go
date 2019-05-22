@@ -19,16 +19,16 @@ func main() {
 	localBranches, remoteBranches := getBranches()
 	list, rmAll := flagInit()
 	toDelete := branchesToDelete(localBranches, remoteBranches)
-	if len(toDelete) == 0 {
-		color.Green("There's nothing to delete!")
-		os.Exit(0)
-	}
+
 	if list {
 		listBranches(localBranches, remoteBranches)
 		printExcess(toDelete)
 		os.Exit(0)
 	}
-
+	if len(toDelete) == 0 {
+		color.Green("There's nothing to delete!")
+		os.Exit(0)
+	}
 	if rmAll {
 		deleteBranches(toDelete)
 		color.HiGreen("Deleted branches:")

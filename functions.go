@@ -58,6 +58,10 @@ func branchesToDelete(localBranches []Ref, remoteBranches []Ref) []Ref {
 }
 
 func printExcess(refs []Ref) {
+	if len(refs) == 0 {
+		color.Yellow("There's no excess branches!")
+		return
+	}
 	color.Yellow("Excess branches:")
 	for _, branch := range refs {
 		fmt.Println(branch.Name().Short())
