@@ -13,4 +13,4 @@ Unfortunately it leaves me with useless local branches. That's why `gobc` was cr
 
 ## Usage
 
-Just type `gobc` to delete branches that are not on remote (origin). You'll encounter pretty prompt which you can use (`tab` + `space`) to select appropriate items. Use `-a` flag to delete _all_ excess branches. Use `-l` flag to list local and origin branches, without deleting them.
+Just type `gobc` to delete branches that are not on remote (origin). You'll encounter pretty prompt which you can use with `tab` + `space` to select appropriate items. Use `-a` flag to delete _all_ excess branches. Use `-l` flag to list local and origin branches, without deleting them.
