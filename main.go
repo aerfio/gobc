@@ -4,6 +4,7 @@ import (
 	"flag"
 	"os"
 
+	"github.com/aerfio/gobc/prompt"
 	"github.com/fatih/color"
 )
 
@@ -35,7 +36,7 @@ func main() {
 			color.Green(" - " + branch.Name().Short())
 		}
 	}
-	chosenBranches := prompt.deletePrompt(toDelete)
+	chosenBranches := prompt.DeletePrompt(toDelete)
 	delBranchesFromStr(chosenBranches)
 	color.Green("Success!")
 }
