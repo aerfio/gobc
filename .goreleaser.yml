@@ -26,5 +26,5 @@ changelog:
     - '^docs:'
     - '^test:'
 release:
-  prerelease: true 
+  prerelease: auto 
   name_template: "{{.ProjectName}}-v{{.Version}}"
