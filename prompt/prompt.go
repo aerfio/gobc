@@ -15,7 +15,7 @@ func DeletePrompt(toDelete []ref) []string {
 	suggestions := fromRefsToSuggestions(toDelete)
 	c := newCompleter(suggestions)
 	color.HiGreen("List branches to delete:")
-	t := prompt.Input("> ", c.Complete, prompt.OptionPrefixTextColor(prompt.Yellow),
+	t := prompt.Input("> ", c.complete, prompt.OptionPrefixTextColor(prompt.Yellow),
 		prompt.OptionPreviewSuggestionTextColor(prompt.Blue),
 		prompt.OptionSelectedSuggestionBGColor(prompt.LightGray),
 		prompt.OptionSuggestionBGColor(prompt.DarkGray))

@@ -4,7 +4,7 @@ import (
 	"github.com/c-bata/go-prompt"
 )
 
-type Completer struct {
+type completer struct {
 	Suggestions []prompt.Suggest
 }
 
@@ -16,11 +16,11 @@ func fromRefsToSuggestions(args []ref) []prompt.Suggest {
 	return ret
 }
 
-func newCompleter(data []prompt.Suggest) *Completer {
-	return &Completer{
+func newCompleter(data []prompt.Suggest) *completer {
+	return &completer{
 		Suggestions: data,
 	}
 }
-func (c *Completer) Complete(d prompt.Document) []prompt.Suggest {
+func (c *completer) complete(d prompt.Document) []prompt.Suggest {
 	return prompt.FilterHasPrefix(c.Suggestions, d.GetWordBeforeCursor(), true)
 }
