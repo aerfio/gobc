@@ -4,12 +4,12 @@ import (
 	"strings"
 
 	unique "github.com/aerfio/gobc/helpers"
-	"github.com/aerfio/gobc/types"
 	"github.com/c-bata/go-prompt"
 	"github.com/fatih/color"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
-type ref = types.Ref
+type ref = *plumbing.Reference
 
 func DeletePrompt(toDelete []ref) []string {
 	suggestions := fromRefsToSuggestions(toDelete)
