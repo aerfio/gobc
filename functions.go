@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"gopkg.in/src-d/go-git.v4/plumbing"
 	"github.com/fatih/color"
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
 type ref = *plumbing.Reference
