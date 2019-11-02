@@ -16,8 +16,8 @@ func flagInit() (bool, bool) {
 }
 
 func main() {
-	localBranches, remoteBranches := getBranches()
 	list, rmAll := flagInit()
+	localBranches, remoteBranches := getBranches()
 	toDelete := branchesToDelete(localBranches, remoteBranches)
 
 	if list {
@@ -30,11 +30,12 @@ func main() {
 		os.Exit(0)
 	}
 	if rmAll {
-		deleteBranches(toDelete)
 		color.HiGreen("Deleted branches:")
 		for _, branch := range toDelete {
 			color.Green(" - " + branch.Name().Short())
 		}
+		deleteBranches(toDelete)
+		os.Exit(0)
 	}
 	chosenBranches := prompt.DeletePrompt(toDelete)
 	delBranchesFromStr(chosenBranches)
