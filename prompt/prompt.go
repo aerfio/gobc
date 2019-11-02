@@ -11,6 +11,7 @@ import (
 
 type ref = *plumbing.Reference
 
+// TODO comment
 func DeletePrompt(toDelete []ref) []string {
 	suggestions := fromRefsToSuggestions(toDelete)
 	c := newCompleter(suggestions)
