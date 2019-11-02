@@ -8,8 +8,9 @@ type completer struct {
 	Suggestions []prompt.Suggest
 }
 
+// TODO: fix this shit
 func fromRefsToSuggestions(args []ref) []prompt.Suggest {
-	var ret []prompt.Suggest
+	ret := make([]prompt.Suggest, len(args))
 	for _, ref := range args {
 		ret = append(ret, prompt.Suggest{Text: ref.Name().Short()})
 	}
