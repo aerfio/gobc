@@ -39,6 +39,11 @@ linters:
     - gocognit
     - godox
     - gochecknoglobals
+  disable-all: false
+  presets:
+    - bugs
+    - unused
+  fast: false
 
 linters-settings:
   errcheck:

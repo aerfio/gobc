@@ -5,10 +5,9 @@ fmt:
 .PHONY: golang-lint
 golang-lint:
 	./bin/golangci-lint run ./...
-
 	
 # Install all the build and lint dependencies
 setup:
-	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh
+	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s v1.21.0
 	go mod tidy
 .PHONY: setup
