@@ -6,12 +6,13 @@ jobs:
     steps:
       - checkout
       - run: go build
+      - run: make golang-lint
   release:
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: curl -sL https://git.io/goreleaser | bash     
+      - run: curl -sL https://git.io/goreleaser | bash
 workflows:
   version: 2
   build_and_test:
