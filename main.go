@@ -10,7 +10,7 @@ import (
 	"github.com/fatih/color"
 )
 
-var version = "v0.2.3"
+var version = "v0.2.5"
 
 func flagInit() (bool, bool, bool) {
 	list := flag.Bool("l", false, color.HiRedString("list local and remote branches, without deleting"))
