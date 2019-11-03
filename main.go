@@ -2,21 +2,37 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/aerfio/gobc/prompt"
 	"github.com/fatih/color"
 )
 
-func flagInit() (bool, bool) {
+var version = "v0.2.3"
+
+func flagInit() (bool, bool, bool) {
 	list := flag.Bool("l", false, color.HiRedString("list local and remote branches, without deleting"))
 	removeAll := flag.Bool("a", false, color.HiRedString("remove all excess branches, without prompt"))
+	printVersion := flag.Bool("v", false, color.HiRedString("show version and exit"))
 	flag.Parse()
-	return *list, *removeAll
+	return *list, *removeAll, *printVersion
 }
 
 func main() {
-	list, rmAll := flagInit()
+	list, rmAll, versionFlag := flagInit()
+
+	if versionFlag {
+		ex, err := os.Executable()
+		if err != nil {
+			panic(err)
+		}
+		exPath := filepath.Dir(ex)
+		fmt.Printf("gobc %s from %s", version, exPath)
+		os.Exit(0)
+	}
+
 	localBranches, remoteBranches := getBranches()
 	toDelete := branchesToDelete(localBranches, remoteBranches)
 
