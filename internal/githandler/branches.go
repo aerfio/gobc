@@ -1,4 +1,4 @@
-package main
+package githandler
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 type ref = *plumbing.Reference
 
-func failIfErr(err error) {
+func FailIfErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,10 +19,10 @@ func failIfErr(err error) {
 
 func deleteBranches(toDelete []ref) {
 	r, err := git.PlainOpen(".")
-	failIfErr(err)
+	FailIfErr(err)
 	for _, branch := range toDelete {
 		err := r.Storer.RemoveReference(branch.Name())
-		failIfErr(err)
+		FailIfErr(err)
 	}
 }
 
@@ -70,15 +70,15 @@ func printExcess(refs []ref) {
 
 func getBranches() ([]ref, []ref) {
 	r, err := git.PlainOpen(".")
-	failIfErr(err)
+	FailIfErr(err)
 
 	remote, err := r.Remote("origin")
-	failIfErr(err)
+	FailIfErr(err)
 
 	remoteBranches := make([]ref, 0)
 
 	refs, err := remote.List(&git.ListOptions{})
-	failIfErr(err)
+	FailIfErr(err)
 	for _, ref := range refs {
 		if ref.Name().IsBranch() {
 			remoteBranches = append(remoteBranches, ref)
@@ -86,7 +86,7 @@ func getBranches() ([]ref, []ref) {
 	}
 
 	w, err := r.Branches()
-	failIfErr(err)
+	FailIfErr(err)
 
 	localBranches := make([]ref, 0)
 	err = w.ForEach(func(arg ref) error {
@@ -95,7 +95,7 @@ func getBranches() ([]ref, []ref) {
 		}
 		return nil
 	})
-	failIfErr(err)
+	FailIfErr(err)
 
 	return localBranches, remoteBranches
 }

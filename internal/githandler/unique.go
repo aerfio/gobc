@@ -1,6 +1,5 @@
-package unique
+package githandler
 
-// UniqStr returns a unique subset of the int slice provided.
 func UniqStr(input []string) []string {
 	u := make([]string, 0, len(input))
 	m := make(map[string]bool)

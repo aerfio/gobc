@@ -129,6 +129,7 @@ linters-settings:
       - NOTE
       - OPTIMIZE # marks code that should be optimized before merging
       - HACK # marks hack-arounds that should be removed before merging
+      - FUCK
   dogsled:
     # checks assignments with too many blank identifiers; default is 2
     max-blank-identifiers: 2
