@@ -11,7 +11,7 @@ import (
 
 type ref = *plumbing.Reference
 
-func FailIfErr(err error) {
+func failIfErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,22 +19,15 @@ func FailIfErr(err error) {
 
 func deleteBranches(toDelete []ref) {
 	r, err := git.PlainOpen(".")
-	FailIfErr(err)
+	failIfErr(err)
 	for _, branch := range toDelete {
 		err := r.Storer.RemoveReference(branch.Name())
-		FailIfErr(err)
+		failIfErr(err)
 	}
 }
 
-func listBranches(localBranches []ref, remoteBranches []ref) {
-	color.Blue("Branches on origin:")
-	for _, branch := range remoteBranches {
-		fmt.Println(branch.Name().Short())
-	}
-	color.Magenta("Local branches")
-	for _, branch := range localBranches {
-		fmt.Println(branch.Name().Short())
-	}
+func BranchToString(b ref) string {
+	return b.Name().Short()
 }
 
 func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
@@ -68,17 +61,17 @@ func printExcess(refs []ref) {
 	}
 }
 
-func getBranches() ([]ref, []ref) {
+func GetBranches() ([]ref, []ref) {
 	r, err := git.PlainOpen(".")
-	FailIfErr(err)
+	failIfErr(err)
 
 	remote, err := r.Remote("origin")
-	FailIfErr(err)
+	failIfErr(err)
 
 	remoteBranches := make([]ref, 0)
 
 	refs, err := remote.List(&git.ListOptions{})
-	FailIfErr(err)
+	failIfErr(err)
 	for _, ref := range refs {
 		if ref.Name().IsBranch() {
 			remoteBranches = append(remoteBranches, ref)
@@ -86,7 +79,7 @@ func getBranches() ([]ref, []ref) {
 	}
 
 	w, err := r.Branches()
-	FailIfErr(err)
+	failIfErr(err)
 
 	localBranches := make([]ref, 0)
 	err = w.ForEach(func(arg ref) error {
@@ -95,13 +88,13 @@ func getBranches() ([]ref, []ref) {
 		}
 		return nil
 	})
-	FailIfErr(err)
+	failIfErr(err)
 
 	return localBranches, remoteBranches
 }
 
 func delBranchesFromStr(branches []string) {
-	localBranches, _ := getBranches()
+	localBranches, _ := GetBranches()
 
 	toDel := make([]ref, 0)
 
