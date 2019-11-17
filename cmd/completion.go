@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"helm.sh/helm/v3/cmd/helm/require"
 )
 
 // completionCmd represents the completion command
@@ -18,6 +19,7 @@ To configure your bash shell to load completions for each session add to your .z
 
 . <(gobc completion)
 `,
+	Args: require.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return rootCmd.GenZshCompletion(os.Stdout)
 	},

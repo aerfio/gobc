@@ -12,6 +12,7 @@ import (
 var rmCmd = &cobra.Command{
 	Use:   "rm",
 	Short: "A brief description of your command",
+
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -20,13 +21,14 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Aliases: []string{"delete", "remove"},
 	Args:    require.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("Print: " + strings.Join(args, " "))
+		return nil
 	},
 }
 
 func init() {
-	// rmCmd.MarkZshCompPositionalArgumentWords()
+	rmCmd.MarkZshCompPositionalArgumentWords(1, "haha", "xD", "test")
 	rootCmd.AddCommand(rmCmd)
 	// Here you will define your flags and configuration settings.
 

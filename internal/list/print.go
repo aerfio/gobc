@@ -23,7 +23,6 @@ func Print() {
 	local, remote := getBranches()
 	l := list.NewWriter()
 	l.SetStyle(list.StyleDefault)
-	// l.AppendItem("Branches:")
 	l.Indent()
 	l.AppendItem("local")
 	l.Indent()
