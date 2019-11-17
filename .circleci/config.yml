@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: go build
       - run: make setup
-      - run: make golang-lint
+      - run: make lint
   release:
     docker:
       - image: circleci/golang:1.12
