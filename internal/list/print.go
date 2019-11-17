@@ -1,10 +1,10 @@
 package list
 
 import (
-	`fmt`
+	"fmt"
 
-	`github.com/aerfio/gobc/internal/githandler`
-	`github.com/jedib0t/go-pretty/list`
+	"github.com/aerfio/gobc/internal/githandler"
+	"github.com/jedib0t/go-pretty/list"
 )
 
 func getBranches() (local, remote []interface{}) {

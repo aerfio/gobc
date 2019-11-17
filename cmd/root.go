@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	`github.com/aerfio/gobc/internal/list`
+	"github.com/aerfio/gobc/internal/list"
 	"github.com/aerfio/gobc/internal/version"
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/cmd/helm/require"
