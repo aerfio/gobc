@@ -5,7 +5,9 @@ import (
 	"os"
 
 	`github.com/aerfio/gobc/internal/list`
+	"github.com/aerfio/gobc/internal/version"
 	"github.com/spf13/cobra"
+	"helm.sh/helm/v3/cmd/helm/require"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -23,7 +25,7 @@ examples and usage of using your application. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-
+	Args: require.NoArgs,
 	// TODO: change this to RunE
 	Run: func(cmd *cobra.Command, args []string) {
 		list.Print()
@@ -47,7 +49,8 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gobc.yaml)")
-	rootCmd.Version = version
+	rootCmd.Version = "placeholder" // just to enable .SetVersionTemplate
+	rootCmd.SetVersionTemplate(version.PrettyString())
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")

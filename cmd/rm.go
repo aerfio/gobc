@@ -5,6 +5,7 @@ import (
 	`strings`
 
 	"github.com/spf13/cobra"
+	"helm.sh/helm/v3/cmd/helm/require"
 )
 
 // rmCmd represents the rm command
@@ -18,7 +19,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Aliases: []string{"delete", "remove"},
-	Args:    cobra.MinimumNArgs(1),
+	Args:    require.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Print: " + strings.Join(args, " "))
 	},

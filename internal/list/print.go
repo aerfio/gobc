@@ -22,7 +22,9 @@ func getBranches() (local, remote []interface{}) {
 func Print() {
 	local, remote := getBranches()
 	l := list.NewWriter()
-	l.SetStyle(list.StyleBulletCircle)
+	l.SetStyle(list.StyleDefault)
+	// l.AppendItem("Branches:")
+	l.Indent()
 	l.AppendItem("local")
 	l.Indent()
 	l.AppendItems(local)
@@ -30,5 +32,6 @@ func Print() {
 	l.AppendItem("origin")
 	l.Indent()
 	l.AppendItems(remote)
+	fmt.Println("Branches:")
 	fmt.Println(l.Render())
 }

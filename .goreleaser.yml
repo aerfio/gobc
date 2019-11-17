@@ -7,15 +7,17 @@ before:
     - go mod download
 builds:
   - ldflags:
-      - -s -w -X github.com/aerfio/gobc/cmd.version={{.Version}} -X github.com/aerfio/gobc/cmd.commit={{.ShortCommit}} -X github.com/aerfio/gobc/cmd.date={{.Date}}
+      - -s -w -X github.com/aerfio/gobc/internal/version.commit={{.Version}} -X github.com/aerfio/gobc/internal/version.commit={{.ShortCommit}} -X github.com/aerfio/gobc/internal/version.date={{.Date}}
   - env:
       - CGO_ENABLED=0
     goos:
       - linux
       - darwin
       - windows
+
 archives:
-  - replacements:
+  - format: binary
+    replacements:
       386: i386
       amd64: x86_64
     format_overrides:
