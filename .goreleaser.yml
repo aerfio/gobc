@@ -26,4 +26,4 @@ changelog:
   sort: asc
 release:
   prerelease: auto
-  name_template: "{{.ProjectName}}"
+  name_template: "v{g{.Version}}"
