@@ -7,7 +7,7 @@ before:
     - go mod download
 builds:
   - ldflags:
-      - -s -w -X github.com/aerfio/gobc/internal/version.commit={{.Version}} -X github.com/aerfio/gobc/internal/version.commit={{.ShortCommit}} -X github.com/aerfio/gobc/internal/version.date={{.Date}}
+      - -s -w -X github.com/aerfio/gobc/internal/version.version={{.Version}} -X github.com/aerfio/gobc/internal/version.commit={{.ShortCommit}} -X github.com/aerfio/gobc/internal/version.date={{.Date}}
     env:
       - CGO_ENABLED=0
     goos:
