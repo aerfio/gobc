@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/aerfio/gobc/internal/version"
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/cmd/helm/require"
@@ -12,7 +14,9 @@ var versionCmd = &cobra.Command{
 	Short: "Print version information",
 	Long:  `Print version information, along with commit HASH and the build date`,
 	Args:  require.NoArgs,
-	Run:   version.PrettyVersion,
+	Run: func(command *cobra.Command, args []string) {
+		fmt.Println(version.PrettyVersionString)
+	},
 }
 
 func init() {
