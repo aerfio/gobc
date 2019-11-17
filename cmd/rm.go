@@ -28,7 +28,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	rmCmd.MarkZshCompPositionalArgumentWords(1, "haha", "xD", "test")
 	rootCmd.AddCommand(rmCmd)
 	// Here you will define your flags and configuration settings.
 
