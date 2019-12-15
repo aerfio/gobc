@@ -1,5 +1,6 @@
 package githandler
 
+// UniqStr returns slice with only unique strings
 func UniqStr(input []string) []string {
 	u := make([]string, 0, len(input))
 	m := make(map[string]bool)

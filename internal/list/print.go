@@ -24,6 +24,7 @@ func getBranches() (local, remote []interface{}, err error) {
 	return localBranches, remoteBranches, nil
 }
 
+// Print prints tree which shows your local and remote branches in pretty format
 func Print() error {
 	local, remote, err := getBranches()
 	if err != nil {

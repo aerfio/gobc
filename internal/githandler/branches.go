@@ -7,6 +7,7 @@ import (
 
 type ref = *plumbing.Reference
 
+// DeleteBranches deletes branches provided by argument. For now only from current folder
 func DeleteBranches(toDelete []ref) error {
 	r, err := git.PlainOpen(".")
 	if err != nil {
@@ -23,7 +24,8 @@ func DeleteBranches(toDelete []ref) error {
 	return nil
 }
 
-func BranchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
+// BranchesToDelete lists excess branches, that are not on remote anymore but are in your local git repo
+func BranchesToDelete(localBranches, remoteBranches []ref) []ref {
 	toDelete := make([]ref, 0)
 
 	for _, local := range localBranches {
@@ -43,7 +45,8 @@ func BranchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
 	return toDelete
 }
 
-func GetBranches() (*[]ref, *[]ref, error) {
+// GetBranches lists local and remote branches (only origin)
+func GetBranches() (localBr, remoteBr *[]ref, err error) {
 	r, err := git.PlainOpen(".")
 	if err != nil {
 		return nil, nil, err
@@ -85,18 +88,3 @@ func GetBranches() (*[]ref, *[]ref, error) {
 
 	return &localBranches, &remoteBranches, nil
 }
-
-// func delBranchesFromStr(branches []string) {
-// 	localBranches, _ := GetBranches()
-//
-// 	toDel := make([]ref, 0)
-//
-// 	for _, refBranch := range localBranches {
-// 		for _, branch := range branches {
-// 			if refBranch.Name().Short() == branch {
-// 				toDel = append(toDel, refBranch)
-// 			}
-// 		}
-// 	}
-// 	deleteBranches(toDel)
-// }
