@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/aerfio/gobc/internal/githandler"
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/cmd/helm/require"
 )
@@ -20,22 +20,29 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Aliases: []string{"delete", "remove"},
-	Args:    require.MinimumNArgs(1),
+	Args:    require.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("Print: " + strings.Join(args, " "))
+		local, remote, err := githandler.GetBranches()
+		if err != nil {
+			return err
+		}
+
+		toDelete := githandler.BranchesToDelete(*local, *remote)
+
+		for _, br := range toDelete {
+			fmt.Printf("Removing %s...", br.Name().Short())
+		}
+
+		err = githandler.DeleteBranches(toDelete)
+		if err != nil {
+			return err
+		}
+
 		return nil
 	},
 }
 
 func init() {
+	// git branch -vv | cut -c 3- | awk '$3 !~/\[/ { print $1 }'
 	rootCmd.AddCommand(rmCmd)
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// rmCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// rmCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

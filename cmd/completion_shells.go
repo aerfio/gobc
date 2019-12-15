@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"log"
-	"os"
-
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/cmd/helm/require"
 )
@@ -46,38 +43,37 @@ import (
 
 func init() {
 	completionCmd.AddCommand(zshCmd)
+	completionCmd.AddCommand(bashCmd)
 }
 
 var zshCmd = &cobra.Command{
-	Use:   "zsh [output_file]",
+	Use:   "zsh",
 	Short: `Output zsh completion script for gobc.`,
 	Long: `
 Generates a zsh autocompletion script for gobc.
 
-This writes to /usr/share/zsh/vendor-completions/_gobc by default so will
-probably need to be run with sudo or as root, eg
+To load completion run
 
-    sudo gobc genautocomplete zsh
-
-Logout and login again to use the autocompletion scripts, or source
-them directly
-
-    autoload -U compinit && compinit
-
-If you supply a command line argument the script will be written
-there.
+	. <(gobc completion zsh)
 `,
 	Args: require.NoArgs,
-	Run: func(command *cobra.Command, args []string) {
-		out := "/usr/share/zsh/vendor-completions/_gobc"
-		outFile, err := os.Create(out)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer func() { _ = outFile.Close() }()
-		err = rootCmd.GenZshCompletion(outFile)
-		if err != nil {
-			log.Fatal(err)
-		}
+	RunE: func(command *cobra.Command, args []string) error {
+		return rootCmd.GenZshCompletion(command.OutOrStdout())
+	},
+}
+
+var bashCmd = &cobra.Command{
+	Use:   "bash",
+	Short: `Output bash completion script for gobc.`,
+	Long: `
+Generates a bash autocompletion script for gobc.
+
+To load completion run
+
+	. <(gobc completion bash)
+`,
+	Args: require.NoArgs,
+	RunE: func(command *cobra.Command, args []string) error {
+		return rootCmd.GenBashCompletion(command.OutOrStdout())
 	},
 }

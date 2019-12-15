@@ -1,36 +1,29 @@
 package githandler
 
 import (
-	"fmt"
-	"log"
-
-	"github.com/fatih/color"
 	"gopkg.in/src-d/go-git.v4"
 	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
 type ref = *plumbing.Reference
 
-func failIfErr(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func deleteBranches(toDelete []ref) {
+func DeleteBranches(toDelete []ref) error {
 	r, err := git.PlainOpen(".")
-	failIfErr(err)
+	if err != nil {
+		return err
+	}
+
 	for _, branch := range toDelete {
 		err := r.Storer.RemoveReference(branch.Name())
-		failIfErr(err)
+		if err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
 
-func BranchToString(b ref) string {
-	return b.Name().Short()
-}
-
-func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
+func BranchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
 	toDelete := make([]ref, 0)
 
 	for _, local := range localBranches {
@@ -50,28 +43,24 @@ func branchesToDelete(localBranches []ref, remoteBranches []ref) []ref {
 	return toDelete
 }
 
-func printExcess(refs []ref) {
-	if len(refs) == 0 {
-		color.Yellow("There's no excess branches!")
-		return
-	}
-	color.Yellow("Excess branches:")
-	for _, branch := range refs {
-		fmt.Println(branch.Name().Short())
-	}
-}
-
-func GetBranches() ([]ref, []ref) {
+func GetBranches() (*[]ref, *[]ref, error) {
 	r, err := git.PlainOpen(".")
-	failIfErr(err)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	remote, err := r.Remote("origin")
-	failIfErr(err)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	remoteBranches := make([]ref, 0)
 
 	refs, err := remote.List(&git.ListOptions{})
-	failIfErr(err)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	for _, ref := range refs {
 		if ref.Name().IsBranch() {
 			remoteBranches = append(remoteBranches, ref)
@@ -79,7 +68,9 @@ func GetBranches() ([]ref, []ref) {
 	}
 
 	w, err := r.Branches()
-	failIfErr(err)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	localBranches := make([]ref, 0)
 	err = w.ForEach(func(arg ref) error {
@@ -88,22 +79,24 @@ func GetBranches() ([]ref, []ref) {
 		}
 		return nil
 	})
-	failIfErr(err)
-
-	return localBranches, remoteBranches
-}
-
-func delBranchesFromStr(branches []string) {
-	localBranches, _ := GetBranches()
-
-	toDel := make([]ref, 0)
-
-	for _, refBranch := range localBranches {
-		for _, branch := range branches {
-			if refBranch.Name().Short() == branch {
-				toDel = append(toDel, refBranch)
-			}
-		}
+	if err != nil {
+		return nil, nil, err
 	}
-	deleteBranches(toDel)
+
+	return &localBranches, &remoteBranches, nil
 }
+
+// func delBranchesFromStr(branches []string) {
+// 	localBranches, _ := GetBranches()
+//
+// 	toDel := make([]ref, 0)
+//
+// 	for _, refBranch := range localBranches {
+// 		for _, branch := range branches {
+// 			if refBranch.Name().Short() == branch {
+// 				toDel = append(toDel, refBranch)
+// 			}
+// 		}
+// 	}
+// 	deleteBranches(toDel)
+// }

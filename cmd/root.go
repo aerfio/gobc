@@ -26,9 +26,8 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: require.NoArgs,
-	// TODO: change this to RunE
-	Run: func(cmd *cobra.Command, args []string) {
-		list.Print()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return list.Print()
 	},
 }
 
@@ -51,7 +50,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gobc.yaml)")
 	rootCmd.Version = "placeholder" // just to enable .SetVersionTemplate
 	rootCmd.SetVersionTemplate(version.PrettyVersionString)
-	
+
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")

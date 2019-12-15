@@ -16,5 +16,4 @@ Run with --help to list the supported shells.
 
 func init() {
 	rootCmd.AddCommand(completionCmd)
-
 }
