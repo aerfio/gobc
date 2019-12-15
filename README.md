@@ -24,4 +24,4 @@ GO111MODULE="on" go get -u -v github.com/aerfio/gobc@v0.2.5
 
 ## Usage
 
-Just type `gobc` to delete branches that are not on remote (origin). You'll encounter pretty prompt which you can use with `tab` + `space` to select appropriate items. Use `-a` flag to delete _all_ excess branches. Use `-l` flag to list local and origin branches, without deleting them.
+Just type `gobc` to list local and remote branches. `gobc rm` to remove those excess ones, `gobc completion {SHELL}` to output completion.  
