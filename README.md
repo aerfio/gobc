@@ -14,13 +14,11 @@ Unfortunately it leaves me with useless local branches. That's why `gobc` was cr
 ## Installation
 
 ```bash
-GO111MODULE="on" go get -u -v github.com/aerfio/gobc@v0.2.5
+curl -Lo gobc "https://github.com/aerfio/gobc/releases/download/$(curl -s https://api.github.com/repos/aerfio/gobc/releases/latest | grep tag_name | cut -d '"' -f 4)/gobc_$(uname)_amd64" \
+&& chmod +x ./gobc \
+&& sudo mv gobc /usr/local/bin
 ```
 
-
-<!-- curl -Lo kyma.tar.gz "https://github.com/kyma-project/cli/releases/download/$(curl -s https://api.github.com/repos/kyma-project/cli/releases/latest | grep tag_name | cut -d '"' -f 4)/kyma_Darwin_x86_64.tar.gz" \
-     && mkdir kyma-release && tar -C kyma-release -zxvf kyma.tar.gz && chmod +x kyma-release/kyma && sudo mv kyma-release/kyma /usr/local/bin \
-     && rm -rf kyma-release kyma.tar.gz -->
 
 ## Usage
 
