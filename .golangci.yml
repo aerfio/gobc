@@ -9,7 +9,7 @@ linters:
     - dupl
     - errcheck
     - funlen
-    - gochecknoinits
+#    - gochecknoinits
     - goconst
     - gocritic
     - gocyclo
@@ -27,7 +27,7 @@ linters:
     - scopelint
     - staticcheck
     - structcheck
-    - stylecheck
+#    - stylecheck
     - typecheck
     - unconvert
     - unparam
@@ -35,10 +35,10 @@ linters:
     - whitespace
     - maligned
     # - prealloc
-    - wsl
+#    - wsl
     - gocognit
     - godox
-    - gochecknoglobals
+#    - gochecknoglobals
   fast: false
 
 linters-settings:
@@ -129,6 +129,7 @@ linters-settings:
       - NOTE
       - OPTIMIZE # marks code that should be optimized before merging
       - HACK # marks hack-arounds that should be removed before merging
+      - FUCK
   dogsled:
     # checks assignments with too many blank identifiers; default is 2
     max-blank-identifiers: 2
@@ -149,6 +150,7 @@ linters-settings:
     allow-case-traling-whitespace: true
     # Allow declarations (var) to be cuddled.
     allow-cuddle-declarations: false
+
 
 # golangci.com configuration
 # https://github.com/golangci/golangci/wiki/Configuration
