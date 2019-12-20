@@ -30,7 +30,7 @@ to quickly create a Cobra application.`,
 		toDelete := githandler.BranchesToDelete(*local, *remote)
 
 		for _, br := range toDelete {
-			fmt.Printf("Removing %s...", br.Name().Short())
+			fmt.Printf("Removing %s...\n", br.Name().Short())
 		}
 
 		err = githandler.DeleteBranches(toDelete)
