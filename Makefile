@@ -1,6 +1,3 @@
-currentPath = `pwd`
-loc=`ls -l`
-
 .PHONY: fmt
 fmt:
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
@@ -12,7 +9,7 @@ lint:
 .PHONY: setup
 setup:
 	curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.21.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.41.1
 	go mod tidy
 
 .PHONY: clean

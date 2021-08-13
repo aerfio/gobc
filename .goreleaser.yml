@@ -6,7 +6,7 @@ before:
     - go mod tidy
 builds:
   - ldflags:
-      - -s -w -X github.com/aerfio/gobc/internal/version.version={{.Version}} -X github.com/aerfio/gobc/internal/version.commit={{.ShortCommit}} -X github.com/aerfio/gobc/internal/version.date={{.Date}}
+      - -s -w -X github.com/aerfio/gobc/internal.version={{.Version}} -X github.com/aerfio/gobc/internal.commit={{.ShortCommit}} -X github.com/aerfio/gobc/internal.date={{.Date}}
     env:
       - CGO_ENABLED=0
     goos:
